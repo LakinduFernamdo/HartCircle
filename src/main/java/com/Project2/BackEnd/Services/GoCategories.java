@@ -33,10 +33,11 @@ public class GoCategories {
             pvdto.setEndTime(post.getEndTime());
 
             UserSummaryDTO usrDto = new UserSummaryDTO();
-            usrDto.setFirstName(usrDto.getFirstName());
-            usrDto.setLastName(usrDto.getLastName());
-            usrDto.setAddress(usrDto.getAddress());
-            usrDto.setTpNumber(usrDto.getTpNumber());
+
+            usrDto.setFirstName(post.getUserID().getFirstName());
+            usrDto.setLastName(post.getUserID().getLastName());
+            usrDto.setAddress(post.getUserID().getAddress());
+            usrDto.setTpNumber(post.getUserID().getTpNumber());
 
             pvdto.setUser(usrDto);
             return pvdto;

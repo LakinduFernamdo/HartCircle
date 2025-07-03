@@ -6,16 +6,21 @@ public class UserSummaryDTO {
     private String tpNumber;
     private String address;
 
+
+
     public UserSummaryDTO(String firstName, String lastName, String tpNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.tpNumber = tpNumber;
         this.address = address;
+
     }
+
 
     public UserSummaryDTO() {
 
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -32,6 +37,7 @@ public class UserSummaryDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 
     public String getTpNumber() {
         return tpNumber;
