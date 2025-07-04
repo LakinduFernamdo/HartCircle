@@ -6,10 +6,7 @@ import com.Project2.BackEnd.Services.CreatePost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -21,9 +18,9 @@ public class PostUpload {
     private CreatePost postcreate;
 
     @PostMapping("/CreatePost")
-    public ResponseEntity<String> createPost(@RequestBody PostData postDataDTO) {
+    public ResponseEntity<String> createPost(@ModelAttribute PostData postDataDTO) {
         try {
-            postcreate.createPost(postDataDTO); // ✅ method name should start lowercase (Java convention)
+            postcreate.createPost(postDataDTO);
             return ResponseEntity.ok("Post created successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

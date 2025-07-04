@@ -2,6 +2,7 @@ package com.Project2.BackEnd.Dto;
 
 
 import com.Project2.BackEnd.Entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Time;
 import java.sql.Date;
@@ -16,16 +17,32 @@ public class PostData {
     private Date endDate;
     private Integer bidLimit;
     private String itemType;
+    private String description;
+    private MultipartFile image1;
+    private MultipartFile image2;
 
-    public PostData( Long userID, Time startTime, Time endTime, Date startDate, Date endDate, Integer bidLimit, String itemType) {
+    public MultipartFile getImage1() {
+        return image1;
+    }
 
-        this.userID = userID;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bidLimit = bidLimit;
-        this.itemType = itemType;
+    public void setImage1(MultipartFile image1) {
+        this.image1 = image1;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public MultipartFile getImage2() {
+        return image2;
+    }
+
+    public void setImage2(MultipartFile image2) {
+        this.image2 = image2;
     }
 
     public Long getUserID() {

@@ -1,6 +1,7 @@
 package com.Project2.BackEnd.Entity;
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -38,6 +39,39 @@ public class Post {
 
     @Column(name = "ItemType")
     private String itemType;
+
+    @Column(name = "Description")
+    private String description;
+
+    @Column(name="Image1",columnDefinition = "LONGBLOB")
+    private byte[] image1;
+
+    @Column(name="Image2",columnDefinition = "LONGBLOB")
+    private byte[] image2;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public byte[] getImage1() {
+        return image1;
+    }
+
+    public void setImage1(byte[] image1) {
+        this.image1 = image1;
+    }
+
+    public byte[] getImage2() {
+        return image2;
+    }
+
+    public void setImage2(byte[] image2) {
+        this.image2 = image2;
+    }
 
     public Integer getPostID() {
         return postID;

@@ -31,6 +31,10 @@ public class GoCategories {
             pvdto.setBidLimit(post.getBidLimit());
             pvdto.setStartTime(post.getStartTime());
             pvdto.setEndTime(post.getEndTime());
+            pvdto.setDescription(post.getDescription());
+            pvdto.setImage1(post.getImage1());
+            pvdto.setImage2(post.getImage2());
+
 
             UserSummaryDTO usrDto = new UserSummaryDTO();
 

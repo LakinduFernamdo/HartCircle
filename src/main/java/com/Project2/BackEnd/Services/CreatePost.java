@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 
 @Service
 public class CreatePost {
@@ -21,7 +23,7 @@ public class CreatePost {
     @Autowired
     private UserRepository userRepository;
 
-    public void createPost(@NotNull PostData postdataDTO) {
+    public void createPost(@NotNull PostData postdataDTO) throws IOException {
         Post postcreate = new Post();
 
         // fetch user entity
@@ -36,6 +38,9 @@ public class CreatePost {
         postcreate.setEndDate(postdataDTO.getEndDate());
         postcreate.setBidLimit(postdataDTO.getBidLimit());
         postcreate.setItemType(postdataDTO.getItemType());
+        postcreate.setDescription(postdataDTO.getDescription());
+        postcreate.setImage1(postdataDTO.getImage1().getBytes());
+        postcreate.setImage2(postdataDTO.getImage2().getBytes());
 
         postRepo.save(postcreate);
     }

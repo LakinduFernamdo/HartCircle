@@ -30,6 +30,7 @@ public class UserRegisterServise {
         user.setNic(userDTO.getNic());
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodedPassword);
+        user.setImage(userDTO.getImage().getBytes());
 
         if (userDTO.getImage() != null && !userDTO.getImage().isEmpty()) {
             user.setImage(userDTO.getImage().getBytes());
