@@ -25,6 +25,7 @@ public class GoCategories {
         return posts.stream().map(post -> {
 
             PostViewDTO dto = new PostViewDTO();
+
             dto.setPostId(post.getPostID());
             dto.setStartTime(post.getStartTime());
             dto.setEndTime(post.getEndTime());

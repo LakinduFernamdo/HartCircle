@@ -20,6 +20,7 @@ public class PostImageController {
 
     @Autowired
     private PostRepository postRepository;
+
     @GetMapping("/image/{postId}/{slot}")
     public ResponseEntity<byte[]>getImage(@PathVariable int postId,@PathVariable int slot){
         Post post = postRepository.findById(postId)

@@ -42,6 +42,7 @@ public class PostViewDTO {
         return postId;
     }
 
+
     public void setPostId(Integer postId) {
         this.postId = postId;
     }
