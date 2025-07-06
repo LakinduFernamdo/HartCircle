@@ -1,7 +1,6 @@
 package com.Project2.BackEnd.Dto;
 
 
-import com.Project2.BackEnd.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Time;
@@ -11,6 +10,7 @@ public class PostData {
 
 
     private Long userID;
+    private Integer postID;
     private Time startTime;
     private Time endTime;
     private Date startDate;
@@ -27,6 +27,14 @@ public class PostData {
 
     public void setImage1(MultipartFile image1) {
         this.image1 = image1;
+    }
+
+    public Integer getPostID() {
+        return postID;
+    }
+
+    public void setPostID(Integer postID) {
+        this.postID = postID;
     }
 
     public String getDescription() {

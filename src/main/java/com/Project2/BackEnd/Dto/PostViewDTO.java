@@ -7,6 +7,7 @@ import java.sql.Time;
 
 public class PostViewDTO {
 
+    private Integer postId;
     private Time startTime;
     private Time endTime;
     private Date startDate;
@@ -14,12 +15,13 @@ public class PostViewDTO {
     private Integer bidLimit;
     private String itemType;
     private String description;
-    private byte[] image1;
-    private byte[] image2;
+    private String image1Url;
+    private String image2Url;
 
     private UserSummaryDTO user;
 
-    public PostViewDTO(Time startTime, Time endTime, Date startDate, Date endDate, Integer bidLimit, String itemType, String description, byte[] image1, byte[] image2, UserSummaryDTO user) {
+    public PostViewDTO(Integer postId, Time startTime, Time endTime, Date startDate, Date endDate, Integer bidLimit, String itemType, String description, String image1Url, String image2Url, UserSummaryDTO user) {
+        this.postId = postId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startDate = startDate;
@@ -27,13 +29,21 @@ public class PostViewDTO {
         this.bidLimit = bidLimit;
         this.itemType = itemType;
         this.description = description;
-        this.image1 = image1;
-        this.image2 = image2;
+        this.image1Url = image1Url;
+        this.image2Url = image2Url;
         this.user = user;
     }
 
     public PostViewDTO() {
 
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
     }
 
     public String getDescription() {
@@ -44,20 +54,20 @@ public class PostViewDTO {
         this.description = description;
     }
 
-    public byte[] getImage1() {
-        return image1;
+    public String getImage1Url() {
+        return image1Url;
     }
 
-    public void setImage1(byte[] image1) {
-        this.image1 = image1;
+    public void setImage1Url(String image1Url) {
+        this.image1Url = image1Url;
     }
 
-    public byte[] getImage2() {
-        return image2;
+    public String getImage2Url() {
+        return image2Url;
     }
 
-    public void setImage2(byte[] image2) {
-        this.image2 = image2;
+    public void setImage2Url(String image2Url) {
+        this.image2Url = image2Url;
     }
 
     public Time getStartTime() {

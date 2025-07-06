@@ -23,17 +23,19 @@ public class GoCategories {
     public List<PostViewDTO> goCategoryItems(String itemType) {
         List<Post> posts = postRepository.findByItemTypeIgnoreCase(itemType);
         return posts.stream().map(post -> {
-            PostViewDTO pvdto = new PostViewDTO();
 
-            pvdto.setItemType(post.getItemType());
-            pvdto.setStartDate(post.getStartDate());
-            pvdto.setEndDate(post.getEndDate());
-            pvdto.setBidLimit(post.getBidLimit());
-            pvdto.setStartTime(post.getStartTime());
-            pvdto.setEndTime(post.getEndTime());
-            pvdto.setDescription(post.getDescription());
-            pvdto.setImage1(post.getImage1());
-            pvdto.setImage2(post.getImage2());
+            PostViewDTO dto = new PostViewDTO();
+            dto.setPostId(post.getPostID());
+            dto.setStartTime(post.getStartTime());
+            dto.setEndTime(post.getEndTime());
+            dto.setStartDate(post.getStartDate());
+            dto.setEndDate(post.getEndDate());
+            dto.setBidLimit(post.getBidLimit());
+            dto.setItemType(post.getItemType());
+            dto.setDescription(post.getDescription());
+
+            dto.setImage1Url("http://localhost:8080/api/v1/user/image/" + post.getPostID() + "/1");
+            dto.setImage2Url("http://localhost:8080/api/v1/user/image/" + post.getPostID() + "/2");
 
 
             UserSummaryDTO usrDto = new UserSummaryDTO();
@@ -43,8 +45,8 @@ public class GoCategories {
             usrDto.setAddress(post.getUserID().getAddress());
             usrDto.setTpNumber(post.getUserID().getTpNumber());
 
-            pvdto.setUser(usrDto);
-            return pvdto;
+            dto.setUser(usrDto);
+            return dto;
         }).collect(Collectors.toList());
 
 
