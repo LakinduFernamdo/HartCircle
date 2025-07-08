@@ -23,6 +23,9 @@ public class User {
     @Column(name = "TPNumber")
     private String tpNumber;
 
+    @Column(name = "DOB")
+    private String DOB;
+
     @Column(name = "NIC")
     private String nic;
 
@@ -35,6 +38,14 @@ public class User {
 
     public Integer getUserId() {
         return userId;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
     }
 
     public void setUserId(Integer userId) {

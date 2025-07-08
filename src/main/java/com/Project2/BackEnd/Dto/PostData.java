@@ -9,7 +9,7 @@ import java.sql.Date;
 public class PostData {
 
 
-    private Long userID;
+    private Integer userID;
     private Integer postID;
     private Time startTime;
     private Time endTime;
@@ -54,11 +54,11 @@ public class PostData {
         this.image2 = image2;
     }
 
-    public Long getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 

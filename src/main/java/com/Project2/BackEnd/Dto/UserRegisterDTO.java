@@ -8,6 +8,7 @@ public class UserRegisterDTO {
     private String firstName;
     private String lastName;
     private String address;
+    private String DOB;
     private String tpNumber;
     private String nic;
     private String password;
@@ -47,6 +48,22 @@ public class UserRegisterDTO {
 
     public String getNic() {
         return nic;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
     }
 
     public void setNic(String nic) {

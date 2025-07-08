@@ -1,6 +1,7 @@
 package com.Project2.BackEnd.Services;
 
 import com.Project2.BackEnd.Dto.PostData;
+import com.Project2.BackEnd.Dto.PostViewDTO;
 import com.Project2.BackEnd.Entity.Post;
 import com.Project2.BackEnd.Repo.PostRepository;
 import org.jetbrains.annotations.NotNull;
@@ -16,8 +17,8 @@ public class UpdatePostService {
     private PostRepository postRepository;
 
 
-    public void UpdatePost(@NotNull PostData postdataDTO) throws IOException {
-        Post post = postRepository.findById(postdataDTO.getPostID())
+    public void UpdatePost(@NotNull PostViewDTO postdataDTO) throws IOException {
+        Post post = postRepository.findById(postdataDTO.getPostId())
                 .orElseThrow(() -> new RuntimeException("Post not found"));
         post.setStartTime(postdataDTO.getStartTime());
         post.setEndTime(postdataDTO.getEndTime());
@@ -27,11 +28,11 @@ public class UpdatePostService {
         post.setItemType(postdataDTO.getItemType());
         post.setDescription(postdataDTO.getDescription());
         //this is  put request.so check request has update image and new images
-        if(postdataDTO.getImage1()!=null && !postdataDTO.getImage1().isEmpty()){
-            post.setImage1(postdataDTO.getImage1().getBytes()); //add new images instead old images
+        if(postdataDTO.getImage1Url()!=null && !postdataDTO.getImage2Url().isEmpty()){
+            post.setImage1(postdataDTO.getImage1Url().getBytes()); //add new images instead old images
         }
-        if(postdataDTO.getImage2()!=null && !postdataDTO.getImage2().isEmpty()){
-            post.setImage2(postdataDTO.getImage2().getBytes());
+        if(postdataDTO.getImage2Url()!=null && !postdataDTO.getImage2Url().isEmpty()){
+            post.setImage2(postdataDTO.getImage2Url().getBytes());
         }
         postRepository.save(post);
 

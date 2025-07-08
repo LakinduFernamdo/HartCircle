@@ -45,6 +45,8 @@ public class GoCategories {
             usrDto.setLastName(post.getUserID().getLastName());
             usrDto.setAddress(post.getUserID().getAddress());
             usrDto.setTpNumber(post.getUserID().getTpNumber());
+            usrDto.setUserProfile("http://localhost:8080/api/v1/user/image/"+post.getUserID().getUserId());
+
 
             dto.setUser(usrDto);
             return dto;

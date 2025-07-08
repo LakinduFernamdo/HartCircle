@@ -1,6 +1,7 @@
 package com.Project2.BackEnd.Controller;
 
 import com.Project2.BackEnd.Dto.PostData;
+import com.Project2.BackEnd.Dto.PostViewDTO;
 import com.Project2.BackEnd.Services.UpdatePostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class UpdatePost {
     @Autowired
     private UpdatePostService updatePostService;
     @PutMapping("/UpdatePost")
-    public ResponseEntity<String> Updateposts(@ModelAttribute PostData postDataDto){
+    public ResponseEntity<String> Updateposts(@ModelAttribute PostViewDTO postDataDto){
         try{
             updatePostService.UpdatePost(postDataDto);
             return ResponseEntity.ok("Post Updated successfully !");
