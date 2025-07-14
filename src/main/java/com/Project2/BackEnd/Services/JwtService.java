@@ -1,28 +1,61 @@
 package com.Project2.BackEnd.Services;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
 @Service
 public class JwtService {
 
-    private final Key key= Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long EXPIRATION_TIME=1000*60*60*1;
+    @Value("${jwt.secret}")
+    private String secret;
 
-    public String generateToken(String nic){
+    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+
+    // ✅ Generate JWT Token with NIC
+    public String generateToken(String nic) {
         return Jwts.builder()
                 .setSubject(nic)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
-                .signWith(key)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
-
     }
 
+    // ✅ Extract NIC from token
+    public String extractUsername(String token) {
+        return getClaims(token).getSubject();
+    }
 
+    // ✅ Check if token is expired
+    public boolean isTokenExpired(String token) {
+        return getClaims(token).getExpiration().before(new Date());
+    }
 
+    // ✅ Validate token
+    public boolean isTokenValid(String token, String nic) {
+        final String extractedNic = extractUsername(token);
+        return (extractedNic.equals(nic) && !isTokenExpired(token));
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    // ✅ Convert secret string to Key
+    private Key getSigningKey() {
+        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 }

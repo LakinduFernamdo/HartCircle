@@ -8,11 +8,12 @@ public class BidDTO {
 
 
     private Integer BidID;
+
+    @JsonProperty("postID")
     private Integer postID;
-    @JsonProperty("BidderID")
-    private Integer BidderID;
-    @JsonProperty("BidAmount")
-    private Double BidAmount;
+
+    @JsonProperty("bidAmount")
+    private Double bidAmount;
 
     public Integer getBidID() {
         return BidID;
@@ -30,19 +31,12 @@ public class BidDTO {
         this.postID = postID;
     }
 
-    public Integer getBidderID() {
-        return BidderID;
-    }
-
-    public void setBidderID(Integer bidderID) {
-        BidderID = bidderID;
-    }
 
     public Double getBidAmount() {
-        return BidAmount;
+        return bidAmount;
     }
 
     public void setBidAmount(Double bidAmount) {
-        BidAmount = bidAmount;
+        this.bidAmount = bidAmount;
     }
 }

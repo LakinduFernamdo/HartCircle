@@ -12,6 +12,9 @@ import com.Project2.BackEnd.Repo.PostRepository;
 import com.Project2.BackEnd.Repo.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -34,39 +37,39 @@ public class BidService {
 
     public void sendMyBidAmount(@NotNull BidDTO bidDto) {
         BidData bidData = new BidData();
-        System.out.println("postID = " + bidDto.getPostID());
-        System.out.println("bidderID = " + bidDto.getBidderID());
 
-
-        // 1. Check if post exists
-        Post postID = postRepository.findById(bidDto.getPostID())
+        // 1. Validate post exists
+        Post post = postRepository.findById(bidDto.getPostID())
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
+        // 2. Get currently logged-in user's NIC from JWT
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userNic = auth.getName();
+        System.out.println("Authentication = " + auth);
+        System.out.println("Name (NIC from JWT) = " + auth.getName());
 
-        // 2. Check if bidder exists
-        User bidderID = userRepository.findById(bidDto.getBidderID())
-                .orElseThrow(() -> new RuntimeException("Bidder not found. Unregistered bidder"));
+        // 3. Fetch bidder from DB using NIC
+        User bidder = userRepository.findByNic(userNic)
+                .orElseThrow(() -> new RuntimeException("Logged-in user not found. Invalid NIC."));
 
-        // 3. Get post owner from the post
-        User postOwnerID = postID.getUserID();
-        if (postOwnerID == null) {
+        // 4. Get post owner
+        User postOwner = post.getUserID();
+        if (postOwner == null) {
             throw new RuntimeException("Post owner not found in database!");
         }
-        System.out.println("OwnerID = " + postOwnerID);
 
-        // 4. Set Date and Time
+        // 5. Set date and time
         Date currentDate = Date.valueOf(LocalDate.now());
         Time currentTime = Time.valueOf(LocalTime.now());
 
-        // 5. Set values in BidData
-        bidData.setPost_ID(postID);
-        bidData.setPostOwner_ID(postOwnerID);
-        bidData.setBidder_ID(bidderID);
+        // 6. Fill and save BidData
+        bidData.setPost_ID(post);
+        bidData.setPostOwner_ID(postOwner);
+        bidData.setBidder_ID(bidder); // ✅ Secure from JWT
         bidData.setBidAmmount(bidDto.getBidAmount());
         bidData.setUploadDate(currentDate);
         bidData.setUploadTime(currentTime);
 
-        // 6. Save to DB
         bidRepository.save(bidData);
     }
 }

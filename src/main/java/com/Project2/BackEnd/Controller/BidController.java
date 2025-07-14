@@ -23,6 +23,7 @@ public class BidController {
             return ResponseEntity.ok("Bit uploaded to BD successfully!");
 
         }catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Bid data Update failed: " + e.getCause());
         }
