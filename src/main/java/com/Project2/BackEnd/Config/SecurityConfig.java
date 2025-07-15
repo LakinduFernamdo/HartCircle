@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    //JwtAuthenticationFilter is a class you probably wrote to extract and validate JWT tokens from incoming requests.
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
@@ -25,7 +26,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/**").permitAll() // allow login
+                        .requestMatchers("/api/v1/user/signIn", "/api/v1/user/signUp").permitAll() // allow login
                         .anyRequest().authenticated()               // secure all others
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
