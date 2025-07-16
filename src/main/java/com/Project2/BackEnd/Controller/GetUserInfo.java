@@ -20,9 +20,9 @@ public class GetUserInfo {
     @GetMapping("/me")
     public ResponseEntity<?> getUserData(Authentication authentication) {
         try {
-            // Get username/email from JWT token
-            String userNIC = authentication.getName(); // in our case NIC
-            UserInfoDTO userInfo = renderUserData.getUserdata(userNIC); // Get user by username/email
+            String userNIC = authentication.getName();
+            System.out.println("NIC from Auth = " + userNIC);
+            UserInfoDTO userInfo = renderUserData.getUserdata(userNIC);
             return ResponseEntity.ok(userInfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,4 +31,3 @@ public class GetUserInfo {
         }
     }
 }
-

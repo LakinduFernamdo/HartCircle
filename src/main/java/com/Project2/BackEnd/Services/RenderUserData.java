@@ -18,6 +18,7 @@ public class RenderUserData {
         User user = userRepository.findByNic(userNIC)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+
         // Map entity to DTO
         UserInfoDTO dto = new UserInfoDTO();
         dto.setUserID(user.getUserId());

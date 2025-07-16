@@ -18,7 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
-
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -29,11 +28,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        System.out.println("✅ JwtAuthenticationFilter called");
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String nic;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("⛔ No valid Authorization header found!");
             filterChain.doFilter(request, response);
             return;
         }
@@ -41,9 +43,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         nic = jwtService.extractUsername(jwt);
 
+        System.out.println("JWT = " + jwt);
+        System.out.println("NIC from token = " + nic);
+
         if (nic != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = userRepository.findByNic(nic).orElse(null);
             if (user != null && jwtService.isTokenValid(jwt, nic)) {
+                System.out.println("✅ Token is valid for user: " + nic);
 
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                         user.getNic(), user.getPassword(), Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
@@ -54,6 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                System.out.println("⛔ Token invalid or user not found.");
             }
         }
 

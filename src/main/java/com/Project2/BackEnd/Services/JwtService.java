@@ -19,7 +19,6 @@ public class JwtService {
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
-    // ✅ Generate JWT Token with NIC
     public String generateToken(String nic) {
         return Jwts.builder()
                 .setSubject(nic)
@@ -29,17 +28,14 @@ public class JwtService {
                 .compact();
     }
 
-    // ✅ Extract NIC from token
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // ✅ Check if token is expired
     public boolean isTokenExpired(String token) {
         return getClaims(token).getExpiration().before(new Date());
     }
 
-    // ✅ Validate token
     public boolean isTokenValid(String token, String nic) {
         final String extractedNic = extractUsername(token);
         return (extractedNic.equals(nic) && !isTokenExpired(token));
@@ -53,7 +49,6 @@ public class JwtService {
                 .getBody();
     }
 
-    // ✅ Convert secret string to Key
     private Key getSigningKey() {
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
