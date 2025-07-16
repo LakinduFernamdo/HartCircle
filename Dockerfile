@@ -1,14 +1,26 @@
-# Use official JDK 21 base image
+# ---------- STAGE 1: Build the application ----------
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files into container
+COPY . .
+
+# Build the JAR file
+RUN mvn clean package -DskipTests
+
+# ---------- STAGE 2: Run the application ----------
 FROM openjdk:21-jdk
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /HartCircle-app
 
-# Copy the built JAR file into the container
-COPY ./target/BackEnd-0.0.1-SNAPSHOT.jar app.jar
+# Copy only the JAR from the first stage
+COPY --from=build /app/target/BackEnd-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port Spring Boot runs on (default is 8080)
+# Expose Spring Boot default port
 EXPOSE 8080
 
-# Command to run the application
+# Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
