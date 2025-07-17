@@ -2,6 +2,8 @@ package com.Project2.BackEnd.Entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "userstest") // Change to your actual table name if needed
 public class User {
@@ -24,7 +26,7 @@ public class User {
     private String tpNumber;
 
     @Column(name = "DOB")
-    private String DOB;
+    private Date DOB;
 
     @Column(name = "NIC")
     private String nic;
@@ -40,11 +42,11 @@ public class User {
         return userId;
     }
 
-    public String getDOB() {
+    public Date getDOB() {
         return DOB;
     }
 
-    public void setDOB(String DOB) {
+    public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
 

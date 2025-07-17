@@ -2,13 +2,15 @@ package com.Project2.BackEnd.Dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
+
 public class UserRegisterDTO {
 
     private Integer userID;
     private String firstName;
     private String lastName;
     private String address;
-    private String DOB;
+    private Date DOB;
     private String tpNumber;
     private String nic;
     private String password;
@@ -58,11 +60,11 @@ public class UserRegisterDTO {
         this.userID = userID;
     }
 
-    public String getDOB() {
+    public Date getDOB() {
         return DOB;
     }
 
-    public void setDOB(String DOB) {
+    public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
 

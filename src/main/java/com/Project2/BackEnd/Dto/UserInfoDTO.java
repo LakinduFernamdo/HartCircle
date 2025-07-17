@@ -3,6 +3,8 @@ package com.Project2.BackEnd.Dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
+
 public class UserInfoDTO {
 
 
@@ -10,11 +12,11 @@ public class UserInfoDTO {
     private String firstName;
     private String lastName;
     private String address;
-    private String DOB;
+    private Date DOB;
     private String tpNumber;
     private String nic;
     private String password;
-    private MultipartFile image;
+    private String image;
 
     public Integer getUserID() {
         return userID;
@@ -48,11 +50,11 @@ public class UserInfoDTO {
         this.address = address;
     }
 
-    public String getDOB() {
+    public Date getDOB() {
         return DOB;
     }
 
-    public void setDOB(String DOB) {
+    public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
 
@@ -80,11 +82,11 @@ public class UserInfoDTO {
         this.password = password;
     }
 
-    public MultipartFile getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(MultipartFile image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

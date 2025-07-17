@@ -21,6 +21,7 @@ public class RenderUserData {
 
         // Map entity to DTO
         UserInfoDTO dto = new UserInfoDTO();
+
         dto.setUserID(user.getUserId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
@@ -28,7 +29,8 @@ public class RenderUserData {
         dto.setDOB(user.getDOB());
         dto.setTpNumber(user.getTpNumber());
         dto.setNic(user.getNic());
-        // don't include password or image for now in response
+        dto.setImage("http://localhost:8080/api/v1/user/image/"+ user.getUserId());
+
         return dto;
     }
 
