@@ -6,6 +6,7 @@ import com.Project2.BackEnd.Services.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +18,10 @@ public class BidController {
     public BidService bidService;
 
     @PostMapping("/AddmyBid")
-    public ResponseEntity<String> SendMyBid(@RequestBody BidDTO bidDto){
+    public ResponseEntity<String> SendMyBid(@RequestBody BidDTO bidDto, Authentication authentication){
         try {
-            bidService.sendMyBidAmount(bidDto);
+            String UserNIC=authentication.getName();
+            bidService.sendMyBidAmount(bidDto,UserNIC);
             return ResponseEntity.ok("Bit uploaded to BD successfully!");
 
         }catch(Exception e){

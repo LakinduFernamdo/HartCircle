@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 
 @Service
@@ -35,28 +36,32 @@ public class BidService {
     @Autowired
     private UserRepository userRepository;
 
-    public void sendMyBidAmount(@NotNull BidDTO bidDto) {
+    public void sendMyBidAmount(@NotNull BidDTO bidDto,String UserNIC) {
         BidData bidData = new BidData();
 
         // 1. Validate post exists
         Post post = postRepository.findById(bidDto.getPostID())
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        // 2. Get currently logged-in user's NIC from JWT
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userNic = auth.getName();
-        System.out.println("Authentication = " + auth);
-        System.out.println("Name (NIC from JWT) = " + auth.getName());
 
         // 3. Fetch bidder(login user currently) from DB using NIC
-        User bidder = userRepository.findByNic(userNic)
-                .orElseThrow(() -> new RuntimeException("your NIC not found. Invalid NIC."));
+        User bidder = userRepository.findByNic(UserNIC)
+                .orElseThrow(() -> new RuntimeException("your NIC not found.Register as new!"));
 
         // 4. Get post owner
         User postOwner = post.getUserID();
         if (postOwner == null) {
             throw new RuntimeException("Post owner not found in database!");
         }
+        System.out.println("User NIC: "+UserNIC);
+
+        Optional<BidData> duplicateBid = bidRepository.findDuplicateBidders(bidder.getUserId(), post.getPostID());
+
+        if (duplicateBid.isPresent()) {
+            throw new RuntimeException("You have already bid on this post.");
+        }
+
+
 
         // 5. Set date and time
         Date currentDate = Date.valueOf(LocalDate.now());
