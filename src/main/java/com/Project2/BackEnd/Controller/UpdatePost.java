@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -18,7 +15,7 @@ public class UpdatePost {
 
     @Autowired
     private UpdatePostService updatePostService;
-    @PutMapping("/UpdatePost")
+    @PatchMapping ("/UpdatePost")
     public ResponseEntity<String> Updateposts(@ModelAttribute PostViewDTO postDataDto){
         try{
             updatePostService.UpdatePost(postDataDto);

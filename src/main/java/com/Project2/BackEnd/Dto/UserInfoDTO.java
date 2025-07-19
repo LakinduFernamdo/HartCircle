@@ -15,8 +15,8 @@ public class UserInfoDTO {
     private Date DOB;
     private String tpNumber;
     private String nic;
-    private String password;
     private String image;
+
 
     public Integer getUserID() {
         return userID;
@@ -74,13 +74,7 @@ public class UserInfoDTO {
         this.nic = nic;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getImage() {
         return image;

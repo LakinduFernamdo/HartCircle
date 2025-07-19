@@ -48,9 +48,9 @@ public class BidService {
         System.out.println("Authentication = " + auth);
         System.out.println("Name (NIC from JWT) = " + auth.getName());
 
-        // 3. Fetch bidder from DB using NIC
+        // 3. Fetch bidder(login user currently) from DB using NIC
         User bidder = userRepository.findByNic(userNic)
-                .orElseThrow(() -> new RuntimeException("Logged-in user not found. Invalid NIC."));
+                .orElseThrow(() -> new RuntimeException("your NIC not found. Invalid NIC."));
 
         // 4. Get post owner
         User postOwner = post.getUserID();
@@ -65,7 +65,7 @@ public class BidService {
         // 6. Fill and save BidData
         bidData.setPost_ID(post);
         bidData.setPostOwner_ID(postOwner);
-        bidData.setBidder_ID(bidder); // ✅ Secure from JWT
+        bidData.setBidder_ID(bidder); // extract bidder from jwt
         bidData.setBidAmmount(bidDto.getBidAmount());
         bidData.setUploadDate(currentDate);
         bidData.setUploadTime(currentTime);

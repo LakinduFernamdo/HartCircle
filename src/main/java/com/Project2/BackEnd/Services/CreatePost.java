@@ -23,27 +23,33 @@ public class CreatePost {
     @Autowired
     private UserRepository userRepository;
 
-    public void createPost(@NotNull PostData postdataDTO) throws IOException {
-        Post postcreate = new Post();
+    public void createPost(@NotNull PostData postdataDTO, String userNIC) throws IOException {
 
-        // fetch user entity
-        User user = userRepository.findById(postdataDTO.getUserID())
+        //  Find the logged-in user using NIC(Extract jwt)
+        User user = userRepository.findByNic(userNIC)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        postcreate.setUserID(user); // not setUserID()
+        Post post = new Post();
+        post.setUserID(user); // Always set user from token
 
-        postcreate.setStartTime(postdataDTO.getStartTime());
-        postcreate.setEndTime(postdataDTO.getEndTime());
-        postcreate.setStartDate(postdataDTO.getStartDate());
-        postcreate.setEndDate(postdataDTO.getEndDate());
-        postcreate.setBidLimit(postdataDTO.getBidLimit());
-        postcreate.setItemType(postdataDTO.getItemType());
-        postcreate.setDescription(postdataDTO.getDescription());
-        postcreate.setImage1(postdataDTO.getImage1().getBytes());
-        postcreate.setImage2(postdataDTO.getImage2().getBytes());
+        post.setStartTime(postdataDTO.getStartTime());
+        post.setEndTime(postdataDTO.getEndTime());
+        post.setStartDate(postdataDTO.getStartDate());
+        post.setEndDate(postdataDTO.getEndDate());
+        post.setBidLimit(postdataDTO.getBidLimit());
+        post.setItemType(postdataDTO.getItemType());
+        post.setDescription(postdataDTO.getDescription());
 
-        postRepo.save(postcreate);
+        if (postdataDTO.getImage1() != null && !postdataDTO.getImage1().isEmpty()) {
+            post.setImage1(postdataDTO.getImage1().getBytes());
+        }
+        if (postdataDTO.getImage2() != null && !postdataDTO.getImage2().isEmpty()) {
+            post.setImage2(postdataDTO.getImage2().getBytes());
+        }
+
+        postRepo.save(post);
     }
+
 
 
 }
